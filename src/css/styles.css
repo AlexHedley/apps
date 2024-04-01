@@ -1,7 +1,59 @@
 body {
-    background-color: #FCDCB5;
+    background-color: white;
 }
 
 h1 {
-    color: #FCDCB5;
+    color: #ef3c40;
+}
+
+.container {
+    /* max-width: 1140px; */
+    max-width: 1500px;
+}
+
+/* Cards */
+
+.card-header, .card-footer {
+    background-color: #ef3c40;
+}
+
+.card-header a {
+    font-weight: bold;
+    color: white;
+}
+
+/* Buttons */
+
+.btn-warning, .btn-warning:hover {
+    color: #C20011;
+}
+
+.card-pill-primary {
+    color: #fff;
+    background-color: #ef3c40;
+}
+
+/* Carousel */
+
+.carousel-caption {
+    color: black;
+    background-color: rgb(255, 255, 255, 0.6); /*white;*/
+}
+
+/* .carousel-control-next-icon, .carousel-control-prev-icon {
+    color: red;
+    background-color: red;
+} */
+
+.carousel-control-prev-icon, .carousel-control-next-icon {
+    background-image: none;
+}
+
+.carousel-control-prev-icon:after, .carousel-control-next-icon:after {     
+    content: "\f053";
+    font-family: 'Font Awesome 5 Free', sans-serif;
+}
+
+.carousel-control-next-icon:after {
+    content: "\f054";
 }

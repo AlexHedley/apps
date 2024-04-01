@@ -1,51 +1,41 @@
-var myApp = angular.module('myApp', []);
-myApp.controller('myController', function ($scope, $http, $q, $filter) {
+var app = angular.module('app', []);
+app.controller('controller', function ($scope, $http, $q, $filter) {
 
-    $scope.games = [];
+    $scope.apps = [];
 
     $scope.init = function () {
         getData();
     }
 
     getData = () =>  {
-        var file = 'data/games.json';
+        var file = 'data/apps.json';
+        // https://raw.githubusercontent.com/AlexHedley/ios/main/src/data/apps.json
+        // https://raw.githubusercontent.com/AlexHedley/mac/main/src/data/apps.json
+        // https://raw.githubusercontent.com/AlexHedley/tvos/main/src/data/apps.json
+        // ❌ https://raw.githubusercontent.com/AlexHedley/android/main/src/data/apps.json
 
         $http.get(file)
         .then(function(response) {
-            $scope.games = response.data.games;
-            $scope.generatePivot();
+            $scope.apps = response.data.apps;
         });
     };
 
-    $scope.generatePivot = () => {
-        
-        $scope.data = $scope.games.map(game => game.players.filter(player => player.winner === true));
-        var data = [].concat.apply([], $scope.data);
+    $scope.openRepository = (app) => {
+        window.open(app.code);
+    }
 
-        if ($scope.ui) {
-            $("#output").pivotUI(
-                data,
-                {
-                    rows: ["name"],
-                    cols: ["score"]
-                }
-            );
-        } else {
-            $("#output").pivot(
-                data,
-                {
-                    rows: ["name"],
-                    cols: ["score"]
-                }
-            );
-        }
+    $scope.openSite = (app) => {
+        window.open(app.site);
+    }
 
+    $scope.openAppSite = (app) => {
+        window.open(app.appSite);
     }
 
     $scope.init();
 });
 
-myApp.filter('toDate', function() {
+app.filter('toDate', function() {
     return function(items) {
         return new Date(items);
     };

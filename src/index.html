@@ -4,8 +4,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <meta name="description" content="">
-    <meta name="keywords" content="">
+    <meta name="description" content="Apps">
+    <meta name="keywords" content="apps">
     <meta name="author" content="Alex Hedley">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="css/vendor/bootstrap.min.css">
@@ -24,137 +24,69 @@
 
     <title></title>
   </head>
-  <body ng-app="myApp">
+  <body ng-app="app">
     <main role="main" class="container">
 
-        <section class="jumbotron title-container text-center">
-            <div>
-                <h1></h1>
-
-                <div class="row justify-content-md-center">
-                    <div class="col-lg-8">
-                        <div class="input-group search-bar">
-                            <input type="text" class="form-control" ng-model='searchText' placeholder="Search for a game..." aria-label="Search">
-                            <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
+        <section class="jumbotron title-container text-center"
+            style="background-image: url('images/banner.png'); background-position: center; min-height: 193px;">
         </section>
 
-        <button class="btn btn-warning float-right" type="button" data-toggle="collapse" data-target="#image" aria-expanded="false" aria-controls="image">
-            Show/Hide
-        </button>
-        <div class="collapse" id="image">
-            <div class="row justify-content-md-center">
-                <img src="images/.jpeg" width="500px" alt="Game" />
+        <div class="row text-center">
+            <div class="col">
+                <h1>Apps</h1>
             </div>
         </div>
 
         <br />
 
-        <div ng-controller="myController">
+        <div ng-controller="controller">
 
             <div class="container">
 
-                <div class="row justify-content-md-center">
-                    <div class="">
-
-                        <table id="results" class="sortable">
-                            <thead>
-                                <tr>
-                                    <th>Date</th>
-                                    <th>Name</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr ng-repeat="game in games">
-                                    <td>{{game.date}}</td>
-                                    <td>{{game.name}}</td>
-                                </tr>
-                            </tbody>
-                        </table>
-
-                    </div>
-                </div>
-
-                <br />
-
-                <div class="row justify-content-md-center">
-                    <div class="">
-
-                        <div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">
-                            <ol class="carousel-indicators">
-                                <li ng-repeat="set in sets" data-target="#carouselExampleCaptions" data-slide-to="{{$index}}"></li>
-                            </ol>
-                            <div class="carousel-inner">
-                                <div ng-repeat="game in games" class="carousel-item" ng-class='{active:$first}'>
-                                    <img src="/PROJECT/{{game.image}}" class="d-block w-100" alt="{{game.name}}">
-                                    <div class="carousel-caption d-none d-md-block">
-                                        <h5>{{game.name}}</h5>
-                                        <p>{{game.description}}</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <a class="carousel-control-prev" href="#carouselExampleCaptions" role="button" data-slide="prev">
-                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                <span class="sr-only">Previous</span>
-                            </a>
-                            <a class="carousel-control-next" href="#carouselExampleCaptions" role="button" data-slide="next">
-                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                <span class="sr-only">Next</span>
-                            </a>
-                        </div>
-
-                    </div>
-                </div>
-
-                <br />
-                
                 <div class="row">
-                    <div class="col">
-
-                        <div class="form-check">
-                            <input type="checkbox" class="form-check-input" id="ui" ng-model="ui" ng-change="generatePivot()">
-                            <label class="form-check-label" for="ui">UI</label>
-                        </div>
-
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col">
-
-                        <div id="output" style="margin: 30px;">
-                            <p>Table...</p>
-                        </div>
-
-                    </div>
-                </div>
-
-                <div class="row">
+                    
                     <div 
-                        ng-repeat="game in games | filter:searchText"
+                        ng-repeat="app in apps | filter:searchText"
                         class="col-md-3"
                         style="margin-bottom: 50px;"
                     >
-                        <div class="card" style="width: 18rem;" data-id="{{game.id}}">
-                            <img ng-if="game.image.length > 0" ng-src="/###/{{game.image}}" class="card-img-top" alt="{{game.name}}">
+                        <div class="card" style="width: 18rem;" data-id="{{app.id}}">
+                            <img ng-if="app.image.length > 0" ng-src="/ios/{{app.image}}" class="card-img-top" alt="{{app.name}}">
                             <div class="card-header">
-                                {{game.name}}
+                                <a ng-href="{{app.details}}/">{{app.name}}</a>
                             </div>
+
                             <div class="card-body">
-                                <p class="card-text">{{game.description}}</p>
-                                <div ng-repeat="player in game.players">
-                                    <p>{{player.name}} <span ng-if="player.winner"><strong>Winner</strong></span></p>
+                                <p class="card-text">{{app.description}}</p>
+                                
+                                <div class="card-topics-container">
+                                    <div ng-repeat="tag in app.tags">
+                                        <span class="badge badge-pill card-pill-primary" style="margin-left:5px;">{{tag}}</span>
+                                    </div>
                                 </div>
+
+                                <br />
+
+                                <div class="btn-group">
+                                    <button ng-if="app.code.length > 0" ng-click="openRepository(app)" type="button" class="btn btn-sm btn-outline-danger card-button">
+                                        <i class="fab fa-github"></i> Code
+                                    </button>
+                                    <button ng-if="app.site.length > 0" ng-click="openSite(app)" type="button" class="btn btn-sm btn-outline-danger card-button">
+                                        <i class="fas fa-globe-europe"></i> Site
+                                    </button>
+                                    <button ng-if="app.appSite.length > 0" ng-click="openAppSite(app)" type="button" class="btn btn-sm btn-outline-danger card-button">
+                                        <i class="fas fa-mobile-alt"></i> App Site
+                                    </button>
+                                </div>
+
                             </div>
-                            <div class="card-footer text-muted">
-                                {{game.date | toDate | date:'mediumDate'}}
+
+                            <div class="card-footer">
+                                <span ng-if="app.date.length > 0">{{app.date | toDate | date:'mediumDate'}}</span>
                             </div>
                         </div>
                     </div>
+
                 </div>
 
             </div>
