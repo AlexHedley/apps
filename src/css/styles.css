@@ -33,6 +33,12 @@ h1 {
     background-color: #ef3c40;
 }
 
+.card-topics-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
 /* Carousel */
 
 .carousel-caption {
