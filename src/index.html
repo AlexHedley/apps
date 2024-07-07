@@ -1,122 +1,114 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 
-    <meta name="description" content="Apps">
-    <meta name="keywords" content="apps">
-    <meta name="author" content="Alex Hedley">
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="css/vendor/bootstrap.min.css">
-    <link rel="stylesheet" href="css/vendor/sticky-footer.css">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
-    <!-- <link rel="stylesheet" href="css/jquery-ui.min.css"> -->
-    <link rel="stylesheet" href="css/vendor/jquery-ui.1.12.1.min.css">
-    <link rel="stylesheet" href="css/vendor/pivot.min.css">
-    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pivottable/2.13.0/pivot.min.css"> -->
-    <link rel="stylesheet" href="css/styles.css">
+        <meta name="description" content="Apps" />
+        <meta name="keywords" content="apps" />
+        <meta name="author" content="Alex Hedley" />
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="css/vendor/bootstrap.min.css" />
+        <link rel="stylesheet" href="css/vendor/sticky-footer.css" />
+        <link
+            rel="stylesheet"
+            href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
+            integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU"
+            crossorigin="anonymous"
+        />
+        <!-- <link rel="stylesheet" href="css/jquery-ui.min.css"> -->
+        <link rel="stylesheet" href="css/vendor/jquery-ui.1.12.1.min.css" />
+        <link rel="stylesheet" href="css/vendor/pivot.min.css" />
+        <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pivottable/2.13.0/pivot.min.css"> -->
+        <link rel="stylesheet" href="css/styles.css" />
 
-    <link rel="shortcut icon" href="favicon.ico">
+        <link rel="shortcut icon" href="favicon.ico" />
 
-    <!-- Fonts -->
-    <!-- <link href='https://fonts.googleapis.com/css?family=Orbitron' rel='stylesheet' type='text/css'> -->
+        <!-- Fonts -->
+        <!-- <link href='https://fonts.googleapis.com/css?family=Orbitron' rel='stylesheet' type='text/css'> -->
 
-    <title></title>
-  </head>
-  <body ng-app="app">
-    <main role="main" class="container">
+        <title>Apps</title>
+    </head>
+    <body ng-app="app">
+        <main role="main" class="container">
+            <section class="jumbotron title-container text-center" style="background-image: url('images/banner.png'); background-position: center; min-height: 193px"></section>
 
-        <section class="jumbotron title-container text-center"
-            style="background-image: url('images/banner.png'); background-position: center; min-height: 193px;">
-        </section>
-
-        <div class="row text-center">
-            <div class="col">
-                <h1>Apps</h1>
+            <div class="row text-center">
+                <div class="col">
+                    <h1>Apps</h1>
+                </div>
             </div>
-        </div>
 
-        <br />
+            <br />
 
-        <div ng-controller="controller">
+            <div ng-controller="controller">
+                <div class="container">
+                    <div class="row">
+                        <div ng-repeat="app in apps | filter:searchText" class="col-md-3" style="margin-bottom: 50px">
+                            <div class="card" style="width: 18rem" data-id="{{app.id}}">
+                                <img ng-if="app.image.length > 0" ng-src="/ios/{{app.image}}" class="card-img-top" alt="{{app.name}}" />
+                                <div class="card-header">
+                                    <a ng-href="/{{app.details}}/">{{app.name}}</a>
+                                </div>
 
-            <div class="container">
+                                <div class="card-body">
+                                    <p class="card-text">{{app.description}}</p>
 
-                <div class="row">
-                    
-                    <div 
-                        ng-repeat="app in apps | filter:searchText"
-                        class="col-md-3"
-                        style="margin-bottom: 50px;"
-                    >
-                        <div class="card" style="width: 18rem;" data-id="{{app.id}}">
-                            <img ng-if="app.image.length > 0" ng-src="/ios/{{app.image}}" class="card-img-top" alt="{{app.name}}">
-                            <div class="card-header">
-                                <a ng-href="{{app.details}}/">{{app.name}}</a>
-                            </div>
+                                    <div class="card-topics-container">
+                                        <div ng-repeat="tag in app.tags">
+                                            <span class="badge badge-pill card-pill-primary" style="margin-left: 5px">{{tag}}</span>
+                                        </div>
+                                    </div>
 
-                            <div class="card-body">
-                                <p class="card-text">{{app.description}}</p>
-                                
-                                <div class="card-topics-container">
-                                    <div ng-repeat="tag in app.tags">
-                                        <span class="badge badge-pill card-pill-primary" style="margin-left:5px;">{{tag}}</span>
+                                    <br />
+
+                                    <div class="btn-group">
+                                        <button ng-if="app.code.length > 0" ng-click="openRepository(app)" type="button" class="btn btn-sm btn-outline-danger card-button">
+                                            <i class="fab fa-github"></i> Code
+                                        </button>
+                                        <button ng-if="app.site.length > 0" ng-click="openSite(app)" type="button" class="btn btn-sm btn-outline-danger card-button">
+                                            <i class="fas fa-globe-europe"></i> Site
+                                        </button>
+                                        <button ng-if="app.appSite.length > 0" ng-click="openAppSite(app)" type="button" class="btn btn-sm btn-outline-danger card-button">
+                                            <i class="fas fa-mobile-alt"></i> App Site
+                                        </button>
                                     </div>
                                 </div>
 
-                                <br />
-
-                                <div class="btn-group">
-                                    <button ng-if="app.code.length > 0" ng-click="openRepository(app)" type="button" class="btn btn-sm btn-outline-danger card-button">
-                                        <i class="fab fa-github"></i> Code
-                                    </button>
-                                    <button ng-if="app.site.length > 0" ng-click="openSite(app)" type="button" class="btn btn-sm btn-outline-danger card-button">
-                                        <i class="fas fa-globe-europe"></i> Site
-                                    </button>
-                                    <button ng-if="app.appSite.length > 0" ng-click="openAppSite(app)" type="button" class="btn btn-sm btn-outline-danger card-button">
-                                        <i class="fas fa-mobile-alt"></i> App Site
-                                    </button>
+                                <div class="card-footer">
+                                    <span ng-if="app.date.length > 0">{{app.date | toDate | date:'mediumDate'}}</span>
                                 </div>
-
-                            </div>
-
-                            <div class="card-footer">
-                                <span ng-if="app.date.length > 0">{{app.date | toDate | date:'mediumDate'}}</span>
                             </div>
                         </div>
                     </div>
-
                 </div>
-
             </div>
+        </main>
 
-        </div>
+        <footer class="footer">
+            <div class="container">
+                <span class="text-muted"><a href="https://alexhedley.github.io/" target="_blank">Alex Hedley</a>.</span>
+            </div>
+        </footer>
 
-    </main>
-
-    <footer class="footer">
-        <div class="container">
-            <span class="text-muted"><a href="https://alexhedley.github.io/" target="_blank">Alex Hedley</a>.</span>
-        </div>
-    </footer>
-
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="js/vendor/jquery-3.3.1.min.js" ></script>
-    <script>window.jQuery || document.write('<script src="js/vendor/jquery-slim.min.js"><\/script>')</script>
-    <script src="js/vendor/jquery-ui.min.js"></script>
-    <!-- <script src="js/vendor/jquery-ui.1.12.1.min.js"></script> -->
-    <!-- <script src="js/vendor/popper.min.js"></script> -->
-    <script src="js/vendor/bootstrap.min.js"></script>
-    <!-- <script src="js/vendor/jquery.pretty-text-diff.min.js"></script> -->
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular.min.js"></script> -->
-    <!-- <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.5/angular.min.js"></script> -->
-    <script src="js/vendor/angular.min.js"></script>
-    <!-- <script src="js/vendor/angular-filter.js"></script> -->
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/pivottable/2.13.0/pivot.min.js"></script> -->
-    <script src="js/vendor/pivot.min.js"></script>
-    <script src="js/vendor/sorttable.js"></script>
-    <script src="js/app.js"></script>
+        <!-- Optional JavaScript -->
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <script src="js/vendor/jquery-3.3.1.min.js"></script>
+        <script>
+            window.jQuery || document.write('<script src="js/vendor/jquery-slim.min.js"><\/script>');
+        </script>
+        <script src="js/vendor/jquery-ui.min.js"></script>
+        <!-- <script src="js/vendor/jquery-ui.1.12.1.min.js"></script> -->
+        <!-- <script src="js/vendor/popper.min.js"></script> -->
+        <script src="js/vendor/bootstrap.min.js"></script>
+        <!-- <script src="js/vendor/jquery.pretty-text-diff.min.js"></script> -->
+        <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular.min.js"></script> -->
+        <!-- <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.5/angular.min.js"></script> -->
+        <script src="js/vendor/angular.min.js"></script>
+        <!-- <script src="js/vendor/angular-filter.js"></script> -->
+        <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/pivottable/2.13.0/pivot.min.js"></script> -->
+        <script src="js/vendor/pivot.min.js"></script>
+        <script src="js/vendor/sorttable.js"></script>
+        <script src="js/app.js"></script>
     </body>
 </html>
